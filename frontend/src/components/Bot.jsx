@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import {useRef} from 'react'
 import axios from 'axios'
 import {FaUserCircle} from 'react-icons/fa'
@@ -9,6 +9,11 @@ function Bot () {
   const [loading,setLoading]=useState(false)
   const messagesEndRef = useRef(null);
  
+
+  useEffect(()=>{
+    messagesEndRef.current?.scrollIntoView({behavior:'smooth'})
+  },[messages])
+
   const handleSendMessage=async()=>{
     setLoading(true)
     if(!input.trim()) 
@@ -17,9 +22,8 @@ function Bot () {
      const res=await axios.post('http://localhost:4002/bot/v1/message',{text:input})
     
     if(res.status===200){
-      setmessages(prev=>[...prev,{text:res.data.userMessage,sender:'user'},{text:res.data.botMessage,sender:'bot'}])
-      setInput("")
-      setLoading(false)
+      setmessages([...messages,{text:res.data.userMessage,sender:'user'},{text:res.data.botMessage,sender:'bot'}])
+  
     }
      console.log(res.data)
   }
@@ -27,6 +31,8 @@ function Bot () {
     catch(error){
       console.log("error in sending messagese",error)
     }
+        setInput("")
+      setLoading(false);
       
   }
     

@@ -1,5 +1,5 @@
 import React from 'react'
-import Bot from './components/Botx'
+import Bot from './components/Bot'
 const App = () => {
   return (
     <div>
