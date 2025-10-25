@@ -22,7 +22,9 @@ mongoose.connect(process.env.MONGO_URI)
 
 //Defining ROutes
 app.use('/bot/v1/',chatbotRoutes)
-
+app.get('/',(req,res)=>{
+  console.log("Backend is running !! Dont worry gurl!!")
+})
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
