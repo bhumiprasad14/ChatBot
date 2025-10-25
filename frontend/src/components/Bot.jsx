@@ -15,9 +15,13 @@ function Bot () {
   },[messages])
 
   const handleSendMessage=async()=>{
-    setLoading(true)
-    if(!input.trim()) 
+    if(!input.trim()) {
+      // Show a temporary message for empty input
+      setmessages([...messages, {text: "Please type a message to continue.", sender: 'bot'}]);
       return;
+    }
+    
+    setLoading(true)
     try{
      const res=await axios.post('http://localhost:4002/bot/v1/message',{text:input})
     
@@ -40,7 +44,7 @@ function Bot () {
         if (e.key === 'Enter') handleSendMessage()}
 
   return (
-     <div className='flex flex-col min-h-screen bg-[#0d0d0d] text-white'>
+     <div className='flex flex-col min-h-screen text-white '>
          {/* Navbar & Header */}
       <header className="fixed top-0 left-0 w-full border-b border-gray-800 bg-[#0d0d0d] z-10">
         <div className=" container mx-auto flex justify-between items-center px-6 py-4">
